@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Project Tracking - Nexus Dashboard" />
+  <title>Projects | Nexus Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body data-theme="dark">
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="logo"><span class="logo-icon"><i class="fa-solid fa-bolt"></i></span><span class="logo-text">Nexus</span></div>
+    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle Sidebar"><i class="fa-solid fa-bars-staggered"></i></button>
+  </div>
+  <nav class="sidebar-nav"><ul>
+    <li><a href="../index.html" class="nav-item"><i class="fa-solid fa-house-chimney"></i><span>Dashboard</span></a></li>
+    <li><a href="employees.html" class="nav-item"><i class="fa-solid fa-users"></i><span>Employees</span></a></li>
+    <li><a href="clients.html" class="nav-item"><i class="fa-solid fa-handshake"></i><span>Clients</span></a></li>
+    <li><a href="projects.html" class="nav-item active" aria-current="page"><i class="fa-solid fa-diagram-project"></i><span>Projects</span></a></li>
+    <li><a href="settings.html" class="nav-item"><i class="fa-solid fa-gear"></i><span>Settings</span></a></li>
+  </ul></nav>
+  <div class="sidebar-footer">
+    <div class="user-mini"><img src="https://ui-avatars.com/api/?name=Admin&background=6c63ff&color=fff&size=36" alt="User" width="36" height="36" /><div class="user-mini-info"><span class="user-mini-name">Admin</span><span class="user-mini-role">Super Admin</span></div></div>
+  </div>
+</aside>
+
+<main class="main-content" id="mainContent">
+  <header class="topbar">
+    <div class="topbar-left">
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Open Menu"><i class="fa-solid fa-bars"></i></button>
+      <div class="page-title"><h1>Projects</h1><span class="breadcrumb">Home / <strong>Projects</strong></span></div>
+    </div>
+    <div class="topbar-right">
+      <div class="location-badge" id="locationBadge"><i class="fa-solid fa-location-dot"></i><span id="locationText">Fetching...</span></div>
+       <button class="icon-btn" id="themeToggle" aria-label="Toggle Theme">
+  <i class="fa-solid fa-moon"></i>
+</button>
+      <button class="icon-btn" id="notifBtn" aria-label="Notifications" aria-expanded="false"><i class="fa-solid fa-bell"></i><span class="badge" id="notifCount">3</span></button>
+      <div class="notif-dropdown" id="notifDropdown" hidden>
+        <div class="notif-header"><span>Notifications</span><button class="mark-read" id="markAllRead">Mark all read</button></div>
+        <ul class="notif-list"><li class="notif-item unread"><i class="fa-solid fa-circle-check text-green"></i><div><p>Project "Apollo" deadline in 2 days</p><small>2 mins ago</small></div></li></ul>
+      </div>
+      <div class="profile-dropdown-wrapper">
+        <button class="profile-btn" id="profileBtn" aria-label="User Profile" aria-expanded="false">
+          <img src="https://ui-avatars.com/api/?name=Admin&background=6c63ff&color=fff&size=36" alt="User" width="36" height="36" /><span>Admin</span><i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="profile-dropdown" id="profileDropdown" hidden>
+          <a href="settings.html"><i class="fa-solid fa-user"></i> Profile</a>
+          <a href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+          <hr/><a href="#" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="content-area">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px">
+      <div>
+        <h2 style="font-size:1.1rem;font-weight:700">All Projects</h2>
+        <p style="color:var(--text-muted);font-size:0.82rem">Track progress, deadlines and task completion</p>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <div class="search-box"><i class="fa-solid fa-magnifying-glass"></i><input type="search" id="projSearch" placeholder="Search projects..." aria-label="Search projects" /></div>
+        <select class="filter-select" id="projStatusFilter" aria-label="Filter by status">
+          <option value="">All Status</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Completed">Completed</option>
+          <option value="Pending">Pending</option>
+          <option value="On Hold">On Hold</option>
+        </select>
+        <button class="btn-primary" id="addProjectBtn"><i class="fa-solid fa-plus"></i> New Project</button>
+      </div>
+    </div>
+
+    <div class="projects-grid" id="projectsGrid" aria-label="Project cards"></div>
+  </section>
+</main>
+
+<div class="toast" id="toast" role="alert" aria-live="assertive"></div>
+<div class="overlay" id="overlay"></div>
+<script src="../assets/js/app.js"></script>
+<script>
+const projects = [
+  { id:'P001', name:'Project Apollo',   client:'TechCorp',    status:'In Progress', progress:72, deadline:'2024-06-15', tasks:18, done:13, color:'#6c63ff' },
+  { id:'P002', name:'Project Orion',    client:'Infosys',     status:'Pending',     progress:25, deadline:'2024-06-28', tasks:12, done:3,  color:'#ffaa00' },
+  { id:'P003', name:'Project Zeus',     client:'Wipro Ltd',   status:'Completed',   progress:100,deadline:'2024-05-30', tasks:22, done:22, color:'#00d68f' },
+  { id:'P004', name:'Project Nova',     client:'HCL Tech',    status:'In Progress', progress:55, deadline:'2024-07-10', tasks:16, done:9,  color:'#4db8ff' },
+  { id:'P005', name:'Project Titan',    client:'Tata Motors', status:'On Hold',     progress:40, deadline:'2024-07-25', tasks:10, done:4,  color:'#ff6b6b' },
+  { id:'P006', name:'Project Eclipse',  client:'MindTree',    status:'In Progress', progress:88, deadline:'2024-06-08', tasks:20, done:17, color:'#6c63ff' },
+];
+
+function statusColor(s) {
+  return { 'In Progress':'#4db8ff','Completed':'#00d68f','Pending':'#ffaa00','On Hold':'#ff6b6b' }[s] || '#8890b5';
+}
+
+function renderProjects(data) {
+  const grid = document.getElementById('projectsGrid');
+  if (!data.length) { grid.innerHTML = '<p style="color:var(--text-muted)">No projects found.</p>'; return; }
+  grid.innerHTML = data.map(p => `
+    <article class="project-card" tabindex="0" aria-label="Project ${p.name}">
+      <div class="project-card-header">
+        <h3>${p.name}</h3>
+        <span class="status-badge" style="background:${statusColor(p.status)}22;color:${statusColor(p.status)}">${p.status}</span>
+      </div>
+      <div class="project-meta">
+        <span><i class="fa-solid fa-building"></i> ${p.client}</span>
+        <span><i class="fa-solid fa-calendar-days"></i> Due: ${p.deadline}</span>
+        <span><i class="fa-solid fa-list-check"></i> ${p.done}/${p.tasks} tasks</span>
+      </div>
+      <div class="progress-bar" role="progressbar" aria-valuenow="${p.progress}" aria-valuemin="0" aria-valuemax="100" aria-label="${p.name} progress">
+        <div class="progress-fill" style="width:${p.progress}%;background:${p.color}"></div>
+      </div>
+      <div class="progress-info"><span>Progress</span><span style="font-weight:700;color:${p.color}">${p.progress}%</span></div>
+      <div style="display:flex;gap:8px;margin-top:14px">
+        <button class="action-btn view" title="View" onclick="showToast('Viewing ${p.name}','info')"><i class="fa-solid fa-eye"></i></button>
+        <button class="action-btn edit" title="Edit" onclick="showToast('Editing ${p.name}','info')"><i class="fa-solid fa-pen"></i></button>
+        <button style="margin-left:auto;font-size:0.75rem;color:var(--accent);font-weight:600" onclick="copyToClipboard('${p.id}','Project ID')">Copy ID</button>
+      </div>
+    </article>
+  `).join('');
+  // Animate progress bars
+  setTimeout(() => {
+    grid.querySelectorAll('.progress-fill').forEach(bar => {
+      const w = bar.style.width;
+      bar.style.width = '0';
+      setTimeout(() => { bar.style.width = w; }, 50);
+    });
+  }, 100);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderProjects(projects);
+  document.getElementById('projSearch').addEventListener('input', e => {
+    const q = e.target.value.toLowerCase();
+    renderProjects(projects.filter(p => p.name.toLowerCase().includes(q) || p.client.toLowerCase().includes(q)));
+  });
+  document.getElementById('projStatusFilter').addEventListener('change', e => {
+    const s = e.target.value;
+    renderProjects(s ? projects.filter(p => p.status === s) : projects);
+  });
+  document.getElementById('addProjectBtn').addEventListener('click', () => {
+
+  showModal('New Project', `
+
+    <div class="form-group">
+      <label class="form-label">Project Name</label>
+      <input class="form-input" id="projectName" type="text" placeholder="e.g. Project Mercury" />
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Client</label>
+      <input class="form-input" id="projectClient" type="text" placeholder="Client name" />
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Deadline</label>
+      <input class="form-input" id="projectDeadline" type="date" />
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Status</label>
+      <select class="form-input form-select" id="projectStatus">
+        <option>In Progress</option>
+        <option>Pending</option>
+        <option>Completed</option>
+        <option>On Hold</option>
+      </select>
+    </div>
+
+  `, () => {
+
+    const newProject = {
+      id: 'P00' + (projects.length + 1),
+      name: document.getElementById('projectName').value,
+      client: document.getElementById('projectClient').value,
+      status: document.getElementById('projectStatus').value,
+      progress: 0,
+      deadline: document.getElementById('projectDeadline').value,
+      tasks: 0,
+      done: 0,
+      color: '#6c63ff'
+    };
+
+    projects.push(newProject);
+
+    renderProjects(projects);
+
+    showToast('Project created successfully!', 'success');
+
+  });
+
+});
+});
+</script>
+</body>
+</html>

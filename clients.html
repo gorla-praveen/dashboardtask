@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Client Management - Nexus Dashboard" />
+  <title>Clients | Nexus Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body data-theme="dark">
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="logo"><span class="logo-icon"><i class="fa-solid fa-bolt"></i></span><span class="logo-text">Nexus</span></div>
+    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle Sidebar"><i class="fa-solid fa-bars-staggered"></i></button>
+  </div>
+  <nav class="sidebar-nav"><ul>
+    <li><a href="../index.html" class="nav-item"><i class="fa-solid fa-house-chimney"></i><span>Dashboard</span></a></li>
+    <li><a href="employees.html" class="nav-item"><i class="fa-solid fa-users"></i><span>Employees</span></a></li>
+    <li><a href="clients.html" class="nav-item active" aria-current="page"><i class="fa-solid fa-handshake"></i><span>Clients</span></a></li>
+    <li><a href="projects.html" class="nav-item"><i class="fa-solid fa-diagram-project"></i><span>Projects</span></a></li>
+    <li><a href="settings.html" class="nav-item"><i class="fa-solid fa-gear"></i><span>Settings</span></a></li>
+  </ul></nav>
+  <div class="sidebar-footer">
+    <div class="user-mini"><img src="https://ui-avatars.com/api/?name=Admin&background=6c63ff&color=fff&size=36" alt="User" width="36" height="36" /><div class="user-mini-info"><span class="user-mini-name">Admin</span><span class="user-mini-role">Super Admin</span></div></div>
+  </div>
+</aside>
+
+<main class="main-content" id="mainContent">
+  <header class="topbar">
+    <div class="topbar-left">
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Open Menu"><i class="fa-solid fa-bars"></i></button>
+      <div class="page-title"><h1>Clients</h1><span class="breadcrumb">Home / <strong>Clients</strong></span></div>
+    </div>
+    
+    <div class="topbar-right">
+      <div class="location-badge" id="locationBadge"><i class="fa-solid fa-location-dot"></i><span id="locationText">Fetching...</span></div>
+       <button class="icon-btn" id="themeToggle" aria-label="Toggle Theme">
+  <i class="fa-solid fa-moon"></i>
+</button>
+      <button class="icon-btn" id="notifBtn" aria-label="Notifications" aria-expanded="false"><i class="fa-solid fa-bell"></i><span class="badge" id="notifCount">3</span></button>
+      
+      <div class="notif-dropdown" id="notifDropdown" hidden>
+        <div class="notif-header"><span>Notifications</span><button class="mark-read" id="markAllRead">Mark all read</button></div>
+        <ul class="notif-list"><li class="notif-item unread"><i class="fa-solid fa-message text-orange"></i><div><p>Client TechCorp sent a message</p><small>3 hrs ago</small></div></li></ul>
+      </div>
+      <div class="profile-dropdown-wrapper">
+        <button class="profile-btn" id="profileBtn" aria-label="User Profile" aria-expanded="false">
+          <img src="https://ui-avatars.com/api/?name=Admin&background=6c63ff&color=fff&size=36" alt="User" width="36" height="36" /><span>Admin</span><i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="profile-dropdown" id="profileDropdown" hidden>
+          <a href="settings.html"><i class="fa-solid fa-user"></i> Profile</a>
+          <hr/><a href="#" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="content-area">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px">
+      <h2 style="font-size:1.1rem;font-weight:700">Client Management</h2>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <div class="search-box"><i class="fa-solid fa-magnifying-glass"></i><input type="search" id="clientSearch" placeholder="Search clients..." aria-label="Search clients" /></div>
+        <select class="filter-select" id="clientStatusFilter" aria-label="Filter by status">
+          <option value="">All Status</option>
+          <option value="Active">Active</option>
+          <option value="Inactive">Inactive</option>
+          <option value="Prospect">Prospect</option>
+        </select>
+        <button class="btn-primary" id="addClientBtn"><i class="fa-solid fa-plus"></i> Add Client</button>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <div class="table-responsive">
+        <table class="data-table" aria-label="Client list">
+          <thead>
+            <tr>
+              <th>Client</th>
+              <th>Industry</th>
+              <th>Projects</th>
+              <th>Status</th>
+              <th>Next Meeting</th>
+              <th>Contact</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="clientTableBody"></tbody>
+        </table>
+      </div>
+      <div class="pagination"><span id="clientCount">Showing all clients</span></div>
+    </div>
+  </section>
+</main>
+
+<div class="toast" id="toast" role="alert" aria-live="assertive"></div>
+<div class="overlay" id="overlay"></div>
+<script src="../assets/js/app.js"></script>
+<script>
+const clients = [
+  { id:'C001', name:'TechCorp India',   industry:'Technology',    projects:4, status:'Active',   meeting:'2024-06-10', contact:'ceo@techcorp.in' },
+  { id:'C002', name:'Infosys Ltd',      industry:'IT Services',   projects:2, status:'Active',   meeting:'2024-06-14', contact:'pm@infosys.com' },
+  { id:'C003', name:'Wipro Limited',    industry:'IT Services',   projects:3, status:'Active',   meeting:'2024-06-20', contact:'contact@wipro.com' },
+  { id:'C004', name:'HCL Technologies', industry:'Technology',    projects:1, status:'Prospect', meeting:'2024-06-25', contact:'biz@hcl.com' },
+  { id:'C005', name:'Tata Motors',      industry:'Automotive',    projects:2, status:'Active',   meeting:'2024-07-02', contact:'ops@tata.com' },
+  { id:'C006', name:'MindTree',         industry:'IT Consulting', projects:0, status:'Inactive', meeting:'—',          contact:'hr@mindtree.com' },
+  { id:'C007', name:'Bajaj Finance',    industry:'Finance',       projects:1, status:'Active',   meeting:'2024-06-18', contact:'fin@bajaj.com' },
+  { id:'C002', name:'Fusion5 pvt Ltd',  industry:'IT Services',   projects:2, status:'Active',   meeting:'2024-06-14', contact:'pm@fusion5.com' },
+
+];
+
+function renderClients(data) {
+  const tbody = document.getElementById('clientTableBody');
+  tbody.innerHTML = data.map(c => `
+    <tr>
+      <td>
+        <div class="employee-cell">
+          <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(c.name)}&background=13162a&color=6c63ff&size=36&bold=true" alt="${c.name}" width="36" height="36" style="border-radius:8px;border:1px solid var(--border)" />
+          <div><div class="employee-name">${c.name}</div><div class="employee-email">${c.id}</div></div>
+        </div>
+      </td>
+      <td>${c.industry}</td>
+      <td><span style="background:var(--bg-hover);padding:3px 10px;border-radius:10px;font-size:0.8rem;font-weight:700">${c.projects}</span></td>
+      <td><span class="status-badge ${c.status.toLowerCase()}">${c.status}</span></td>
+      <td style="font-size:0.82rem">${c.meeting}</td>
+      <td>
+        <button onclick="copyToClipboard('${c.contact}','Email')" style="font-size:0.78rem;color:var(--accent);font-weight:600;display:flex;align-items:center;gap:5px">
+          <i class="fa-solid fa-copy"></i> ${c.contact}
+        </button>
+      </td>
+      <td>
+        <div class="action-btns">
+          <button class="action-btn view" title="View" onclick="showToast('Viewing ${c.name}','info')"><i class="fa-solid fa-eye"></i></button>
+          <button class="action-btn edit" title="Edit" onclick="showToast('Editing ${c.name}','info')"><i class="fa-solid fa-pen"></i></button>
+<button class="action-btn delete" title="Delete" onclick="deleteClient('${c.id}')">
+  <i class="fa-solid fa-trash"></i>
+</button>        </div>
+      </td>
+    </tr>
+  `).join('');
+  document.getElementById('clientCount').textContent = `Showing ${data.length} clients`;
+}
+function deleteClient(id) {
+
+  const index = clients.findIndex(c => c.id === id);
+
+  if (index !== -1) {
+
+    const deletedName = clients[index].name;
+
+    clients.splice(index, 1);
+
+    renderClients(clients);
+
+    showToast(`${deletedName} deleted successfully`, 'error');
+
+  }
+
+}
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderClients(clients);
+  document.getElementById('clientSearch').addEventListener('input', e => {
+    const q = e.target.value.toLowerCase();
+    renderClients(clients.filter(c => c.name.toLowerCase().includes(q) || c.industry.toLowerCase().includes(q)));
+  });
+  document.getElementById('clientStatusFilter').addEventListener('change', e => {
+    const s = e.target.value;
+    renderClients(s ? clients.filter(c => c.status === s) : clients);
+  });
+ document.getElementById('addClientBtn').addEventListener('click', () => {
+
+  showModal('Add New Client', `
+
+    <div class="form-group">
+      <label class="form-label">Company Name</label>
+      <input class="form-input" id="clientName" type="text" placeholder="e.g. Reliance Industries" />
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Industry</label>
+      <input class="form-input" id="clientIndustry" type="text" placeholder="Technology, Finance..." />
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Contact Email</label>
+      <input class="form-input" id="clientEmail" type="email" placeholder="contact@company.com" />
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Status</label>
+      <select class="form-input form-select" id="clientStatus">
+        <option>Active</option>
+        <option>Prospect</option>
+        <option>Inactive</option>
+      </select>
+    </div>
+
+  `, () => {
+
+    const newClient = {
+      id: 'C00' + (clients.length + 1),
+      name: document.getElementById('clientName').value,
+      industry: document.getElementById('clientIndustry').value,
+      projects: 0,
+      status: document.getElementById('clientStatus').value,
+      meeting: '—',
+      contact: document.getElementById('clientEmail').value
+    };
+
+    clients.push(newClient);
+
+    renderClients(clients);
+
+    showToast('Client added successfully!', 'success');
+
+  });
+
+});
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Settings - Nexus Dashboard" />
+  <title>Settings | Nexus Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body data-theme="dark">
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="logo"><span class="logo-icon"><i class="fa-solid fa-bolt"></i></span><span class="logo-text">Nexus</span></div>
+    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle Sidebar"><i class="fa-solid fa-bars-staggered"></i></button>
+  </div>
+  <nav class="sidebar-nav"><ul>
+    <li><a href="../index.html" class="nav-item"><i class="fa-solid fa-house-chimney"></i><span>Dashboard</span></a></li>
+    <li><a href="employees.html" class="nav-item"><i class="fa-solid fa-users"></i><span>Employees</span></a></li>
+    <li><a href="clients.html" class="nav-item"><i class="fa-solid fa-handshake"></i><span>Clients</span></a></li>
+    <li><a href="projects.html" class="nav-item"><i class="fa-solid fa-diagram-project"></i><span>Projects</span></a></li>
+    <li><a href="settings.html" class="nav-item active" aria-current="page"><i class="fa-solid fa-gear"></i><span>Settings</span></a></li>
+  </ul></nav>
+  <div class="sidebar-footer">
+    <div class="user-mini"><img src="https://ui-avatars.com/api/?name=Admin&background=6c63ff&color=fff&size=36" alt="User" width="36" height="36" /><div class="user-mini-info"><span class="user-mini-name">Admin</span><span class="user-mini-role">Super Admin</span></div></div>
+  </div>
+</aside>
+
+<main class="main-content" id="mainContent">
+  <header class="topbar">
+    <div class="topbar-left">
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Open Menu"><i class="fa-solid fa-bars"></i></button>
+      <div class="page-title"><h1>Settings</h1><span class="breadcrumb">Home / <strong>Settings</strong></span></div>
+    </div>
+    <div class="topbar-right">
+      <div class="location-badge" id="locationBadge"><i class="fa-solid fa-location-dot"></i><span id="locationText">Fetching...</span></div>
+       <button class="icon-btn" id="themeToggle" aria-label="Toggle Theme">
+  <i class="fa-solid fa-moon"></i>
+</button>
+      <button class="icon-btn" id="notifBtn" aria-label="Notifications" aria-expanded="false"><i class="fa-solid fa-bell"></i><span class="badge" id="notifCount">3</span></button>
+      <div class="notif-dropdown" id="notifDropdown" hidden>
+        <div class="notif-header"><span>Notifications</span><button class="mark-read" id="markAllRead">Mark all read</button></div>
+        <ul class="notif-list"><li class="notif-item unread"><i class="fa-solid fa-circle-check text-green"></i><div><p>Settings updated</p><small>just now</small></div></li></ul>
+      </div>
+      <div class="profile-dropdown-wrapper">
+        <button class="profile-btn" id="profileBtn" aria-label="User Profile" aria-expanded="false">
+          <img src="https://ui-avatars.com/api/?name=Admin&background=6c63ff&color=fff&size=36" alt="User" width="36" height="36" /><span>Admin</span><i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="profile-dropdown" id="profileDropdown" hidden>
+          <a href="settings.html"><i class="fa-solid fa-user"></i> Profile</a>
+          <hr/><a href="#" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="content-area">
+
+    <!-- Profile Card -->
+    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px;display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+      <div style="position:relative">
+        <img id="profileAvatar" src="https://ui-avatars.com/api/?name=Admin&background=6c63ff&color=fff&size=80" alt="Profile" width="80" height="80" style="border-radius:50%;border:3px solid var(--accent)" />
+        <button onclick="document.getElementById('avatarInput').click()" style="position:absolute;bottom:0;right:0;width:26px;height:26px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px" aria-label="Change avatar"><i class="fa-solid fa-camera"></i></button>
+        <input type="file" id="avatarInput" accept="image/*" style="display:none" aria-label="Upload avatar" />
+      </div>
+      <div>
+        <h2 style="font-size:1.2rem;font-weight:800" id="profileName">Admin</h2>
+        <p style="color:var(--text-muted);font-size:0.82rem">Super Admin • Hyderabad, IN</p>
+        <p style="color:var(--text-secondary);font-size:0.8rem;margin-top:4px" id="sessionInfo"></p>
+      </div>
+    </div>
+
+    <div class="settings-grid">
+      <!-- Appearance -->
+      <div class="settings-card">
+        <h3><i class="fa-solid fa-palette" style="color:var(--accent);margin-right:8px"></i>Appearance</h3>
+        <div class="settings-row">
+          <label for="themeToggle">Dark Mode</label>
+          <div class="toggle" id="themeToggle" role="switch" aria-checked="true" tabindex="0" aria-label="Toggle dark mode"></div>
+        </div>
+        <div class="settings-row">
+          <label>Accent Color</label>
+          <div class="color-swatches" role="group" aria-label="Choose accent color">
+            <div class="color-swatch active" data-color="#6c63ff" style="background:#6c63ff" title="Purple" tabindex="0" role="radio" aria-checked="true" aria-label="Purple"></div>
+            <div class="color-swatch" data-color="#00d68f" style="background:#00d68f" title="Green" tabindex="0" role="radio" aria-checked="false" aria-label="Green"></div>
+            <div class="color-swatch" data-color="#4db8ff" style="background:#4db8ff" title="Blue" tabindex="0" role="radio" aria-checked="false" aria-label="Blue"></div>
+            <div class="color-swatch" data-color="#ffaa00" style="background:#ffaa00" title="Gold" tabindex="0" role="radio" aria-checked="false" aria-label="Gold"></div>
+            <div class="color-swatch" data-color="#ff6b6b" style="background:#ff6b6b" title="Red" tabindex="0" role="radio" aria-checked="false" aria-label="Red"></div>
+            <div class="color-swatch" data-color="#00bcd4" style="background:#00bcd4" title="Cyan" tabindex="0" role="radio" aria-checked="false" aria-label="Cyan"></div>
+          </div>
+        </div>
+        <div class="settings-row">
+          <label for="sidebarCollapse">Collapse Sidebar by Default</label>
+          <div class="toggle" id="sidebarCollapseToggle" role="switch" aria-checked="false" tabindex="0" aria-label="Collapse sidebar by default"></div>
+        </div>
+      </div>
+
+      <!-- Notifications Settings -->
+      <div class="settings-card">
+        <h3><i class="fa-solid fa-bell" style="color:var(--accent-orange);margin-right:8px"></i>Notifications</h3>
+        <div class="settings-row">
+          <label>Browser Notifications</label>
+          <div class="toggle on" id="notifToggle" role="switch" aria-checked="true" tabindex="0" aria-label="Toggle browser notifications"></div>
+        </div>
+        <div class="settings-row">
+          <label>Deadline Reminders</label>
+          <div class="toggle on" id="deadlineToggle" role="switch" aria-checked="true" tabindex="0" aria-label="Toggle deadline reminders"></div>
+        </div>
+        <div class="settings-row">
+          <label>Email Notifications</label>
+          <div class="toggle" id="emailToggle" role="switch" aria-checked="false" tabindex="0" aria-label="Toggle email notifications"></div>
+        </div>
+        <div style="margin-top:16px">
+          <button class="btn-primary" onclick="sendNotification('Test Notification','🔔 Notifications are working correctly!').then(()=>showToast('Test notification sent!','success'))">
+            <i class="fa-solid fa-paper-plane"></i> Send Test Notification
+          </button>
+        </div>
+      </div>
+
+      <!-- Profile Settings -->
+      <div class="settings-card">
+        <h3><i class="fa-solid fa-user" style="color:var(--accent-blue);margin-right:8px"></i>Profile Settings</h3>
+        <div class="form-group">
+          <label class="form-label" for="settingsName">Full Name</label>
+          <input class="form-input" id="settingsName" type="text" value="Admin" aria-label="Full name" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="settingsEmail">Email</label>
+          <input class="form-input" id="settingsEmail" type="email" value="admin@nexus.com" aria-label="Email address" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="settingsRole">Role</label>
+          <input class="form-input" id="settingsRole" type="text" value="Super Admin" readonly aria-label="Role" />
+        </div>
+        <button class="btn-primary" id="saveProfile" style="width:100%">
+          <i class="fa-solid fa-floppy-disk"></i> Save Profile
+        </button>
+      </div>
+
+      <!-- Security -->
+      <div class="settings-card">
+        <h3><i class="fa-solid fa-shield-halved" style="color:var(--accent-green);margin-right:8px"></i>Security</h3>
+        <div class="form-group">
+          <label class="form-label" for="currentPass">Current Password</label>
+          <input class="form-input" id="currentPass" type="password" placeholder="••••••••" aria-label="Current password" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="newPass">New Password</label>
+          <input class="form-input" id="newPass" type="password" placeholder="••••••••" aria-label="New password" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="confirmPass">Confirm Password</label>
+          <input class="form-input" id="confirmPass" type="password" placeholder="••••••••" aria-label="Confirm password" />
+        </div>
+        <button class="btn-primary" id="changePass" style="width:100%;background:var(--accent-green)">
+          <i class="fa-solid fa-lock"></i> Update Password
+        </button>
+      </div>
+
+      <!-- LocalStorage / Session Info -->
+      <div class="settings-card">
+        <h3><i class="fa-solid fa-database" style="color:var(--text-muted);margin-right:8px"></i>Storage & Session</h3>
+        <div class="settings-row"><label>Stored Theme</label><code id="storedTheme" style="font-size:0.78rem;color:var(--accent)">—</code></div>
+        <div class="settings-row"><label>Accent Color</label><code id="storedAccent" style="font-size:0.78rem;color:var(--accent)">—</code></div>
+        <div class="settings-row"><label>Sidebar State</label><code id="storedSidebar" style="font-size:0.78rem;color:var(--accent)">—</code></div>
+        <div class="settings-row"><label>Session User</label><code id="sessionUser" style="font-size:0.78rem;color:var(--accent-green)">—</code></div>
+        <div class="settings-row"><label>Login Time</label><code id="loginTime" style="font-size:0.78rem;color:var(--text-muted)">—</code></div>
+        <button class="btn-secondary" id="clearStorage" style="margin-top:16px;width:100%;color:var(--accent-2)">
+          <i class="fa-solid fa-trash"></i> Clear Local Storage
+        </button>
+      </div>
+
+      <!-- Referral + Copy -->
+      <div class="settings-card">
+        <h3><i class="fa-solid fa-share-nodes" style="color:var(--accent-orange);margin-right:8px"></i>Referral & Links</h3>
+        <div class="form-group">
+          <label class="form-label">Your Referral Code</label>
+          <div class="copy-row">
+            <input class="form-input" type="text" value="NEXUS-MK-2024" readonly aria-label="Referral Code" id="refCode" />
+            <button class="copy-btn" onclick="copyToClipboard('NEXUS-MK-2024','Referral code')"><i class="fa-regular fa-copy"></i> Copy</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Dashboard Link</label>
+          <div class="copy-row">
+            <input class="form-input" type="text" value="https://nexus-dashboard.netlify.app" readonly aria-label="Dashboard URL" id="dashUrl" />
+            <button class="copy-btn" onclick="copyToClipboard('https://nexus-dashboard.netlify.app','Link')"><i class="fa-regular fa-copy"></i> Copy</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="toast" id="toast" role="alert" aria-live="assertive"></div>
+<div class="overlay" id="overlay"></div>
+<script src="../assets/js/app.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Show LocalStorage / SessionStorage data
+  document.getElementById('storedTheme').textContent = localStorage.getItem('nexus_theme') || 'not set';
+  document.getElementById('storedAccent').textContent = localStorage.getItem('nexus_accent') || 'default';
+  document.getElementById('storedSidebar').textContent = localStorage.getItem('nexus_sidebar_state') || 'expanded';
+
+  const session = JSON.parse(sessionStorage.getItem('nexus_session') || '{}');
+  document.getElementById('sessionUser').textContent = session.user || 'no session';
+  document.getElementById('loginTime').textContent = session.loginTime ? new Date(session.loginTime).toLocaleTimeString() : '—';
+  if (document.getElementById('sessionInfo')) {
+    document.getElementById('sessionInfo').textContent = `Session started: ${session.loginTime ? new Date(session.loginTime).toLocaleString() : 'unknown'}`;
+  }
+
+  // Toggle interactions
+  document.querySelectorAll('.toggle').forEach(toggle => {
+    toggle.addEventListener('click', () => {
+      toggle.classList.toggle('on');
+      toggle.setAttribute('aria-checked', toggle.classList.contains('on').toString());
+    });
+    toggle.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle.click(); } });
+  });
+
+  // Save profile
+  document.getElementById('saveProfile').addEventListener('click', () => {
+    const name = document.getElementById('settingsName').value;
+    localStorage.setItem('nexus_username', name);
+    showToast('Profile saved to LocalStorage!', 'success');
+  });
+
+  // Change password
+  document.getElementById('changePass').addEventListener('click', () => {
+    const np = document.getElementById('newPass').value;
+    const cp = document.getElementById('confirmPass').value;
+    if (!np) { showToast('Please enter a new password', 'error'); return; }
+    if (np !== cp) { showToast('Passwords do not match!', 'error'); return; }
+    showToast('Password updated successfully!', 'success');
+    document.getElementById('currentPass').value = '';
+    document.getElementById('newPass').value = '';
+    document.getElementById('confirmPass').value = '';
+  });
+
+  // Clear storage
+  document.getElementById('clearStorage').addEventListener('click', () => {
+    showModal('Clear Storage', '<p style="color:var(--text-secondary)">This will remove all saved preferences (theme, accent, sidebar state). Continue?</p>', () => {
+      localStorage.removeItem('nexus_theme');
+      localStorage.removeItem('nexus_accent');
+      localStorage.removeItem('nexus_sidebar_state');
+      localStorage.removeItem('nexus_location');
+      showToast('Local storage cleared. Refresh to reset.', 'info');
+    }, 'Clear', true);
+  });
+
+  // Avatar upload preview
+  document.getElementById('avatarInput').addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        document.getElementById('profileAvatar').src = ev.target.result;
+        showToast('Avatar updated!', 'success');
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+});
+</script>
+</body>
+</html>

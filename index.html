@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Nexus Admin Dashboard - Employee & Client Management System" />
+  <meta name="keywords" content="dashboard, admin, employee management, client management" />
+  <meta name="author" content="Admin" />
+  <meta property="og:title" content="Nexus Dashboard" />
+  <meta property="og:description" content="Professional Employee & Client Management Dashboard" />
+  <title>Nexus Dashboard | Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body data-theme="dark">
+
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar" role="navigation" aria-label="Main Navigation">
+  <div class="sidebar-header">
+    <div class="logo">
+      <span class="logo-icon"><i class="fa-solid fa-bolt"></i></span>
+      <span class="logo-text">Nexus</span>
+    </div>
+    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle Sidebar">
+      <i class="fa-solid fa-bars-staggered"></i>
+    </button>
+  </div>
+
+  <nav class="sidebar-nav">
+    <ul role="menubar">
+      <li role="none"><a href="index.html" class="nav-item active" role="menuitem" aria-current="page">
+        <i class="fa-solid fa-house-chimney" aria-hidden="true"></i>
+        <span>Dashboard</span>
+      </a></li>
+      <li role="none"><a href="employees.html" class="nav-item" role="menuitem">
+        <i class="fa-solid fa-users" aria-hidden="true"></i>
+        <span>Employees</span>
+      </a></li>
+      <li role="none"><a href="clients.html" class="nav-item" role="menuitem">
+        <i class="fa-solid fa-handshake" aria-hidden="true"></i>
+        <span>Clients</span>
+      </a></li>
+      <li role="none"><a href="projects.html" class="nav-item" role="menuitem">
+        <i class="fa-solid fa-diagram-project" aria-hidden="true"></i>
+        <span>Projects</span>
+      </a></li>
+      <li role="none"><a href="settings.html" class="nav-item" role="menuitem">
+        <i class="fa-solid fa-gear" aria-hidden="true"></i>
+        <span>Settings</span>
+      </a></li>
+    </ul>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="user-mini" id="sidebarUser">
+      <img src="https://ui-avatars.com/api/?name=Admin&background=6c63ff&color=fff&size=36" alt="User Avatar" width="36" height="36" />
+      <div class="user-mini-info">
+        <span class="user-mini-name">Admin</span>
+        <span class="user-mini-role">Super Admin</span>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- Main Content -->
+<main class="main-content" id="mainContent">
+
+  <!-- Topbar -->
+  <header class="topbar" role="banner">
+    <div class="topbar-left">
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Open Menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <div class="page-title">
+        <h1>Dashboard</h1>
+        <span class="breadcrumb">Home / <strong>Overview</strong></span>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <div class="location-badge" id="locationBadge" title="Your Location">
+        <i class="fa-solid fa-location-dot"></i>
+        <span id="locationText">Fetching...</span>
+      </div>
+      <button class="icon-btn" id="themeToggle" aria-label="Toggle Theme">
+  <i class="fa-solid fa-moon"></i>
+</button>
+      <button class="icon-btn" id="notifBtn" aria-label="Notifications" aria-expanded="false">
+        <i class="fa-solid fa-bell"></i>
+        <span class="badge" id="notifCount">3</span>
+      </button>
+      <div class="notif-dropdown" id="notifDropdown" role="region" aria-label="Notifications" hidden>
+        <div class="notif-header"><span>Notifications</span><button class="mark-read" id="markAllRead">Mark all read</button></div>
+        <ul class="notif-list" id="notifList">
+          <li class="notif-item unread"><i class="fa-solid fa-circle-check text-green"></i><div><p>Project "Apollo" deadline in 2 days</p><small>2 mins ago</small></div></li>
+          <li class="notif-item unread"><i class="fa-solid fa-user-plus text-blue"></i><div><p>New employee Priya joined</p><small>1 hr ago</small></div></li>
+          <li class="notif-item unread"><i class="fa-solid fa-message text-orange"></i><div><p>Client TechCorp sent a message</p><small>3 hrs ago</small></div></li>
+        </ul>
+      </div>
+      <div class="profile-dropdown-wrapper">
+        <button class="profile-btn" id="profileBtn" aria-label="User Profile" aria-expanded="false">
+          <img src="https://ui-avatars.com/api/?name=Admin&background=6c63ff&color=fff&size=36" alt="User" width="36" height="36" />
+          <span>Admin</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="profile-dropdown" id="profileDropdown" hidden role="menu">
+          <a href="settings.html" role="menuitem"><i class="fa-solid fa-user"></i> Profile</a>
+          <a href="settings.html" role="menuitem"><i class="fa-solid fa-gear"></i> Settings</a>
+          <hr/>
+          <a href="#" role="menuitem" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Dashboard Content -->
+  <section class="content-area" aria-label="Dashboard Overview">
+
+    <!-- Stats Cards -->
+    <div class="stats-grid" role="list" aria-label="Key Statistics">
+      <article class="stat-card" role="listitem" tabindex="0">
+        <div class="stat-icon blue"><i class="fa-solid fa-users" aria-hidden="true"></i></div>
+        <div class="stat-info">
+          <span class="stat-value" data-count="248">0</span>
+          <span class="stat-label">Total Employees</span>
+          <span class="stat-change positive"><i class="fa-solid fa-arrow-trend-up"></i> +12% this month</span>
+        </div>
+      </article>
+      <article class="stat-card" role="listitem" tabindex="0">
+        <div class="stat-icon purple"><i class="fa-solid fa-handshake" aria-hidden="true"></i></div>
+        <div class="stat-info">
+          <span class="stat-value" data-count="84">0</span>
+          <span class="stat-label">Active Clients</span>
+          <span class="stat-change positive"><i class="fa-solid fa-arrow-trend-up"></i> +5 new clients</span>
+        </div>
+      </article>
+      <article class="stat-card" role="listitem" tabindex="0">
+        <div class="stat-icon orange"><i class="fa-solid fa-diagram-project" aria-hidden="true"></i></div>
+        <div class="stat-info">
+          <span class="stat-value" data-count="36">0</span>
+          <span class="stat-label">Active Projects</span>
+          <span class="stat-change negative"><i class="fa-solid fa-arrow-trend-down"></i> -2 delayed</span>
+        </div>
+      </article>
+      <article class="stat-card" role="listitem" tabindex="0">
+        <div class="stat-icon green"><i class="fa-solid fa-indian-rupee-sign" aria-hidden="true"></i></div>
+        <div class="stat-info">
+          <span class="stat-value" data-count="92" data-prefix="₹" data-suffix="L">0</span>
+          <span class="stat-label">Monthly Revenue</span>
+          <span class="stat-change positive"><i class="fa-solid fa-arrow-trend-up"></i> +18% vs last month</span>
+        </div>
+      </article>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="charts-row">
+      <div class="chart-card wide" aria-label="Revenue Chart">
+        <div class="chart-header">
+          <h2>Revenue Overview</h2>
+          <div class="chart-tabs" role="tablist">
+            <button class="tab-btn active" role="tab" aria-selected="true" data-period="monthly">Monthly</button>
+            <button class="tab-btn" role="tab" aria-selected="false" data-period="quarterly">Quarterly</button>
+          </div>
+        </div>
+        <canvas id="revenueChart" aria-label="Revenue bar chart" role="img"></canvas>
+      </div>
+      <div class="chart-card" aria-label="Project Status Donut Chart">
+        <div class="chart-header">
+          <h2>Project Status</h2>
+        </div>
+        <canvas id="projectDonut" aria-label="Project status pie chart" role="img"></canvas>
+        <div class="donut-legend">
+          <span><i class="fa-solid fa-circle text-green"></i> Completed: 18</span>
+          <span><i class="fa-solid fa-circle text-blue"></i> In Progress: 12</span>
+          <span><i class="fa-solid fa-circle text-orange"></i> Pending: 6</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Activity + Notifications -->
+    <div class="bottom-row">
+
+      <!-- Recent Activity -->
+      <div class="activity-card">
+        <h2 class="section-title">Activity Timeline</h2>
+        <ul class="timeline" aria-label="Recent Activity">
+          <li class="timeline-item">
+            <span class="timeline-dot blue"></span>
+            <div class="timeline-content">
+              <p>New employee <strong>Ravi Kumar</strong> onboarded</p>
+              <small>Today, 9:00 AM</small>
+            </div>
+          </li>
+          <li class="timeline-item">
+            <span class="timeline-dot green"></span>
+            <div class="timeline-content">
+              <p>Project <strong>Apollo</strong> milestone completed</p>
+              <small>Yesterday, 4:30 PM</small>
+            </div>
+          </li>
+          <li class="timeline-item">
+            <span class="timeline-dot orange"></span>
+            <div class="timeline-content">
+              <p>Client <strong>TechCorp</strong> meeting scheduled</p>
+              <small>Yesterday, 2:00 PM</small>
+            </div>
+          </li>
+          <li class="timeline-item">
+            <span class="timeline-dot purple"></span>
+            <div class="timeline-content">
+              <p>Invoice <strong>#INV-2024-089</strong> sent to client</p>
+              <small>2 days ago</small>
+            </div>
+          </li>
+          <li class="timeline-item">
+            <span class="timeline-dot red"></span>
+            <div class="timeline-content">
+              <p>Deadline alert: <strong>Project Orion</strong> due in 3 days</p>
+              <small>2 days ago</small>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Referral & API Features Panel -->
+      <div class="features-panel">
+        <h2 class="section-title">Quick Actions</h2>
+
+        <div class="referral-box">
+          <label for="referralCode">Your Referral Code</label>
+          <div class="copy-row">
+            <input type="text" id="referralCode" value="NEXUS-MK-2024" readonly aria-label="Referral Code" />
+            <button class="copy-btn" id="copyReferral" aria-label="Copy referral code">
+              <i class="fa-regular fa-copy"></i> Copy
+            </button>
+          </div>
+          <span class="copy-feedback" id="copyFeedback" role="status" aria-live="polite"></span>
+        </div>
+
+        <div class="api-features">
+          <button class="feature-btn" id="notifTestBtn" aria-label="Test browser notification">
+            <i class="fa-solid fa-bell"></i>
+            <span>Test Notification</span>
+          </button>
+          <button class="feature-btn" id="fullscreenBtn" aria-label="Toggle fullscreen">
+            <i class="fa-solid fa-expand"></i>
+            <span>Fullscreen</span>
+          </button>
+          <button class="feature-btn" id="speechBtn" aria-label="Start speech recognition">
+            <i class="fa-solid fa-microphone"></i>
+            <span>Voice Search</span>
+          </button>
+          <button class="feature-btn" id="exportBtn" aria-label="Export dashboard data">
+            <i class="fa-solid fa-file-export"></i>
+            <span>Export Data</span>
+          </button>
+        </div>
+
+        <!-- Drag and Drop task mini board -->
+        <div class="mini-kanban">
+          <h3>Quick Tasks <small>(drag to reorder)</small></h3>
+          <ul id="taskList" aria-label="Draggable task list">
+            <li draggable="true" class="drag-task" tabindex="0"><i class="fa-solid fa-grip-vertical"></i> Review Q3 reports</li>
+            <li draggable="true" class="drag-task" tabindex="0"><i class="fa-solid fa-grip-vertical"></i> Approve leave requests</li>
+            <li draggable="true" class="drag-task" tabindex="0"><i class="fa-solid fa-grip-vertical"></i> Client call at 3PM</li>
+            <li draggable="true" class="drag-task" tabindex="0"><i class="fa-solid fa-grip-vertical"></i> Update project timeline</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </section>
+</main>
+
+<!-- Toast Notification -->
+<div class="toast" id="toast" role="alert" aria-live="assertive"></div>
+
+<!-- Overlay for mobile -->
+<div class="overlay" id="overlay"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

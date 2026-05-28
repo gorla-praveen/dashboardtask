@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Employee Management - Nexus Dashboard" />
+  <title>Employees | Nexus Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body data-theme="dark">
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="logo">
+      <span class="logo-icon"><i class="fa-solid fa-bolt"></i></span>
+      <span class="logo-text">Nexus</span>
+    </div>
+    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle Sidebar"><i class="fa-solid fa-bars-staggered"></i></button>
+  </div>
+  <nav class="sidebar-nav">
+    <ul>
+      <li><a href="../index.html" class="nav-item"><i class="fa-solid fa-house-chimney"></i><span>Dashboard</span></a></li>
+      <li><a href="employees.html" class="nav-item active" aria-current="page"><i class="fa-solid fa-users"></i><span>Employees</span></a></li>
+      <li><a href="clients.html" class="nav-item"><i class="fa-solid fa-handshake"></i><span>Clients</span></a></li>
+      <li><a href="projects.html" class="nav-item"><i class="fa-solid fa-diagram-project"></i><span>Projects</span></a></li>
+      <li><a href="settings.html" class="nav-item"><i class="fa-solid fa-gear"></i><span>Settings</span></a></li>
+    </ul>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="user-mini">
+      <img src="https://ui-avatars.com/api/?name=Admin&background=6c63ff&color=fff&size=36" alt="User" width="36" height="36" />
+      <div class="user-mini-info"><span class="user-mini-name">Admin</span><span class="user-mini-role">Super Admin</span></div>
+    </div>
+  </div>
+</aside>
+
+<main class="main-content" id="mainContent">
+  <header class="topbar">
+    <div class="topbar-left">
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Open Menu"><i class="fa-solid fa-bars"></i></button>
+      <div class="page-title"><h1>Employees</h1><span class="breadcrumb">Home / <strong>Employees</strong></span></div>
+    </div>
+    <div class="topbar-right">
+      <div class="location-badge" id="locationBadge"><i class="fa-solid fa-location-dot"></i><span id="locationText">Fetching...</span></div>
+       <button class="icon-btn" id="themeToggle" aria-label="Toggle Theme">
+  <i class="fa-solid fa-moon"></i>
+</button>
+      <button class="icon-btn" id="notifBtn" aria-label="Notifications" aria-expanded="false"><i class="fa-solid fa-bell"></i><span class="badge" id="notifCount">3</span></button>
+      <div class="notif-dropdown" id="notifDropdown" hidden>
+        <div class="notif-header"><span>Notifications</span><button class="mark-read" id="markAllRead">Mark all read</button></div>
+        <ul class="notif-list" id="notifList">
+          <li class="notif-item unread"><i class="fa-solid fa-circle-check text-green"></i><div><p>Project "Apollo" deadline in 2 days</p><small>2 mins ago</small></div></li>
+          <li class="notif-item unread"><i class="fa-solid fa-user-plus text-blue"></i><div><p>New employee Priya joined</p><small>1 hr ago</small></div></li>
+          <li class="notif-item unread"><i class="fa-solid fa-message text-orange"></i><div><p>Client TechCorp sent a message</p><small>3 hrs ago</small></div></li>
+        </ul>
+      </div>
+      <div class="profile-dropdown-wrapper">
+        <button class="profile-btn" id="profileBtn" aria-label="User Profile" aria-expanded="false">
+          <img src="https://ui-avatars.com/api/?name=Admin&background=6c63ff&color=fff&size=36" alt="User" width="36" height="36" />
+          <span>Admin</span><i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="profile-dropdown" id="profileDropdown" hidden>
+          <a href="settings.html"><i class="fa-solid fa-user"></i> Profile</a>
+          <a href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+          <hr/><a href="#" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="content-area">
+    <!-- Stats Row -->
+    <div class="stats-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:24px">
+      <article class="stat-card">
+        <div class="stat-icon blue"><i class="fa-solid fa-users"></i></div>
+        <div class="stat-info"><span class="stat-value" data-count="248">0</span><span class="stat-label">Total Employees</span></div>
+      </article>
+      <article class="stat-card">
+        <div class="stat-icon green"><i class="fa-solid fa-user-check"></i></div>
+        <div class="stat-info"><span class="stat-value" data-count="210">0</span><span class="stat-label">Active</span></div>
+      </article>
+      <article class="stat-card">
+        <div class="stat-icon orange"><i class="fa-solid fa-user-clock"></i></div>
+        <div class="stat-info"><span class="stat-value" data-count="24">0</span><span class="stat-label">On Leave</span></div>
+      </article>
+      <article class="stat-card">
+        <div class="stat-icon purple"><i class="fa-solid fa-user-plus"></i></div>
+        <div class="stat-info"><span class="stat-value" data-count="14">0</span><span class="stat-label">New This Month</span></div>
+      </article>
+    </div>
+
+    <!-- Employee Table -->
+    <div class="table-container">
+      <div class="table-toolbar">
+        <h2>Employee Directory</h2>
+        <div class="toolbar-actions">
+          <div class="search-box" role="search">
+            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+            <input type="search" id="searchInput" placeholder="Search employees..." aria-label="Search employees" />
+          </div>
+          <select class="filter-select" id="roleFilter" aria-label="Filter by role">
+            <option value="">All Roles</option>
+            <option value="Developer">Developer</option>
+            <option value="Designer">Designer</option>
+            <option value="Manager">Manager</option>
+            <option value="HR">HR</option>
+            <option value="Sales">Sales</option>
+            <option value="DevOps">DevOps</option>
+            <option value="Finance">Finance</option>
+          </select>
+          <select class="filter-select" id="statusFilter" aria-label="Filter by status">
+            <option value="">All Status</option>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+            <option value="on-leave">On Leave</option>
+            <option value="pending">Pending</option>
+          </select>
+          <button class="btn-primary" id="addEmpBtn" aria-label="Add new employee">
+            <i class="fa-solid fa-plus"></i> Add Employee
+          </button>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="data-table" role="table" aria-label="Employee table">
+          <thead>
+            <tr>
+              <th data-col="name" tabindex="0" aria-sort="none">Employee <i class="fa-solid fa-sort sort-icon"></i></th>
+              <th data-col="id" tabindex="0">ID <i class="fa-solid fa-sort sort-icon"></i></th>
+              <th data-col="role" tabindex="0">Role <i class="fa-solid fa-sort sort-icon"></i></th>
+              <th data-col="dept" tabindex="0">Department <i class="fa-solid fa-sort sort-icon"></i></th>
+              <th data-col="status" tabindex="0">Status <i class="fa-solid fa-sort sort-icon"></i></th>
+              <th data-col="joined" tabindex="0">Joined <i class="fa-solid fa-sort sort-icon"></i></th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="empTableBody"></tbody>
+        </table>
+      </div>
+
+      <div class="pagination">
+        <span id="paginationInfo">Showing 1–10 of 10 employees</span>
+        <div class="page-btns" role="navigation" aria-label="Pagination">
+          <button class="page-btn" aria-label="Previous page"><i class="fa-solid fa-chevron-left"></i></button>
+          <button class="page-btn active" aria-current="page">1</button>
+          <button class="page-btn">2</button>
+          <button class="page-btn">3</button>
+          <button class="page-btn" aria-label="Next page"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="toast" id="toast" role="alert" aria-live="assertive"></div>
+<div class="overlay" id="overlay"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="../assets/js/app.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const tbody = document.getElementById('empTableBody');
+  const searchInput = document.getElementById('searchInput');
+  const roleFilter = document.getElementById('roleFilter');
+  const statusFilter = document.getElementById('statusFilter');
+  let sortCol = null, sortDir = 1;
+
+  function getFiltered() {
+    const q = searchInput.value.toLowerCase();
+    const role = roleFilter.value;
+    const status = statusFilter.value;
+    return window.employeeData.filter(e =>
+      (!q || e.name.toLowerCase().includes(q) || e.email.toLowerCase().includes(q) || e.id.toLowerCase().includes(q)) &&
+      (!role || e.role === role) &&
+      (!status || e.status === status)
+    );
+  }
+
+  function render() {
+    let data = getFiltered();
+    if (sortCol) {
+      data.sort((a, b) => (a[sortCol] > b[sortCol] ? 1 : -1) * sortDir);
+    }
+    renderEmployeeTable(data, tbody);
+    document.getElementById('paginationInfo').textContent = `Showing 1–${data.length} of ${data.length} employees`;
+  }
+
+  searchInput.addEventListener('input', render);
+  roleFilter.addEventListener('change', render);
+  statusFilter.addEventListener('change', render);
+
+  // Sorting
+  document.querySelectorAll('th[data-col]').forEach(th => {
+    th.addEventListener('click', () => {
+      const col = th.dataset.col;
+      if (sortCol === col) sortDir *= -1; else { sortCol = col; sortDir = 1; }
+      document.querySelectorAll('th[data-col]').forEach(t => { t.classList.remove('sorted'); t.setAttribute('aria-sort', 'none'); });
+      th.classList.add('sorted');
+      th.setAttribute('aria-sort', sortDir === 1 ? 'ascending' : 'descending');
+      render();
+    });
+    th.addEventListener('keydown', e => { if (e.key === 'Enter') th.click(); });
+  });
+
+  // Add Employee
+  // Add Employee
+document.getElementById('addEmpBtn').addEventListener('click', () => {
+
+  showModal('Add New Employee', `
+
+    <div class="form-group">
+      <label class="form-label" for="newName">Full Name</label>
+      <input class="form-input" id="newName" type="text" placeholder="e.g. Rahul Gupta" />
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="newEmail">Email</label>
+      <input class="form-input" id="newEmail" type="email" placeholder="rahul@nexus.com" />
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="newRole">Role</label>
+      <select class="form-input form-select" id="newRole">
+        <option>Developer</option>
+        <option>Designer</option>
+        <option>Manager</option>
+        <option>HR</option>
+        <option>Sales</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="newDept">Department</label>
+      <input class="form-input" id="newDept" type="text" placeholder="Engineering" />
+    </div>
+
+  `, () => {
+
+    const name = document.getElementById('newName').value;
+    const email = document.getElementById('newEmail').value;
+    const role = document.getElementById('newRole').value;
+    const dept = document.getElementById('newDept').value;
+
+    const newId = `EMP${String(window.employeeData.length + 1).padStart(3, '0')}`;
+
+    const newEmployee = {
+      id: newId,
+      name,
+      email,
+      role,
+      dept,
+      status: 'active',
+      joined: new Date().toISOString().split('T')[0]
+    };
+
+    window.employeeData.push(newEmployee);
+
+    render();
+
+    showToast('New employee added successfully!', 'success');
+
+    sendNotification(
+      'New Employee',
+      `${name} added successfully`
+    );
+
+  });
+
+});
+
+  render();
+});
+</script>
+</body>
+</html>
